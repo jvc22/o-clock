@@ -29,8 +29,8 @@ export default function RootLayout({
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
-          enableSystem
           storageKey="sdc-theme"
+          enableSystem
         >
           {children}
         </ThemeProvider>
