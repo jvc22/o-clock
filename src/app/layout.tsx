@@ -1,15 +1,19 @@
 import './globals.css'
 
-import { GeistMono } from 'geist/font/mono'
-import { GeistSans } from 'geist/font/sans'
 import type { Metadata } from 'next'
+import { Inter as FontSans } from 'next/font/google'
 
-import { ThemeProvider } from '@/components/theme/theme-provider'
 import { cn } from '@/lib/utils'
+
+import { Providers } from './providers'
+
+const fontSans = FontSans({
+  subsets: ['latin'],
+  variable: '--font-sans',
+})
 
 export const metadata: Metadata = {
   title: 'Calendar | SDC',
-  description: 'Organize your appointments daily routine!',
 }
 
 export default function RootLayout({
@@ -18,22 +22,11 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className={cn(GeistSans.variable, GeistMono.variable)}>
+    <html lang="en">
       <body
-        className={cn(
-          'min-h-screen bg-background font-sans antialiased',
-          GeistSans.className,
-          GeistMono.className,
-        )}
+        className={cn('bg-background font-sans antialiased', fontSans.variable)}
       >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          storageKey="sdc-theme"
-          enableSystem
-        >
-          {children}
-        </ThemeProvider>
+        <Providers>{children}</Providers>
       </body>
     </html>
   )
