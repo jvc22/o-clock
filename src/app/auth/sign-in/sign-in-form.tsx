@@ -19,9 +19,9 @@ export function SignInForm() {
   const [{ success, message, errors }, handleSubmit, isPending] = useFormState(
     signIn,
     () => {
-      router.push('/')
+      router.push('/calendar')
 
-      toast.success('Welcome to your calendar dashboard!')
+      toast.success('Welcome to your calendar calendar!')
     },
   )
 
