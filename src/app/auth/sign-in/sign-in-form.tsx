@@ -2,7 +2,7 @@
 
 import { AlertTriangle, Loader2 } from 'lucide-react'
 import Link from 'next/link'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { Button } from '@/components/ui/button'
@@ -14,7 +14,6 @@ import { signIn } from './actions'
 
 export function SignInForm() {
   const router = useRouter()
-  const searchParams = useSearchParams()
 
   const [{ success, message, errors }, handleSubmit, isPending] = useFormState(
     signIn,
@@ -43,13 +42,7 @@ export function SignInForm() {
 
       <div className="space-y-1">
         <Label htmlFor="email">E-mail</Label>
-        <Input
-          type="text"
-          name="email"
-          id="email"
-          autoComplete="off"
-          defaultValue={searchParams.get('email') ?? ''}
-        />
+        <Input type="text" name="email" id="email" autoComplete="off" />
 
         {errors?.email && (
           <span className="text-xs font-medium text-red-500 dark:text-red-400">
