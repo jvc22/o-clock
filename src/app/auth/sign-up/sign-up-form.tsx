@@ -7,6 +7,14 @@ import { Label } from '@/components/ui/label'
 export function SignUpForm() {
   return (
     <form action="" className="space-y-4">
+      <div className="text-center">
+        <h1 className="text-3xl font-bold tracking-tight">o.clock</h1>
+
+        <span className="text-muted-foreground">
+          Register and enjoy your time
+        </span>
+      </div>
+
       <div className="space-y-1">
         <Label htmlFor="name">Full name</Label>
         <Input name="name" type="name" id="name" autoComplete="off" />

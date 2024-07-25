@@ -1,3 +1,9 @@
+import { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Auth | o.clock',
+}
+
 export default function AuthLayout({
   children,
 }: Readonly<{

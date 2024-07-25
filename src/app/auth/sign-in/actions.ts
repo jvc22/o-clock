@@ -1,6 +1,7 @@
 'use server'
 
 import { HTTPError } from 'ky'
+import { cookies } from 'next/headers'
 import { z } from 'zod'
 
 import { signInFn } from '@/http/sign-in'
@@ -29,7 +30,12 @@ export async function signIn(data: FormData) {
       password,
     })
 
-    console.log(token)
+    cookies().set('sdc-app-token', token, {
+      path: '/',
+      maxAge: 60 * 60 * 24 * 7,
+      secure: true,
+      sameSite: true,
+    })
   } catch (err) {
     if (err instanceof HTTPError) {
       const { message } = await err.response.json()
@@ -37,7 +43,7 @@ export async function signIn(data: FormData) {
       return { success: false, message, errors: null }
     }
 
-    console.error(err)
+    console.log(err)
 
     return {
       success: false,
