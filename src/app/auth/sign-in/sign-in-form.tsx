@@ -3,6 +3,7 @@
 import { AlertTriangle, Loader2 } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
+import { toast } from 'sonner'
 
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { Button } from '@/components/ui/button'
@@ -19,6 +20,8 @@ export function SignInForm() {
     signIn,
     () => {
       router.push('/')
+
+      toast.success('Welcome to your calendar dashboard!')
     },
   )
 
