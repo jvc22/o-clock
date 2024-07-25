@@ -30,7 +30,7 @@ export async function signIn(data: FormData) {
       password,
     })
 
-    cookies().set('sdc-app-token', token, {
+    cookies().set('oclock-token', token, {
       path: '/',
       maxAge: 60 * 60 * 24 * 7,
       secure: true,

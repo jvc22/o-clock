@@ -15,7 +15,7 @@ export const api = ky.create({
           cookieStore = serverCookies
         }
 
-        const token = getCookie('sdc-app-token', { cookies: cookieStore })
+        const token = getCookie('oclock-token', { cookies: cookieStore })
 
         if (token) {
           request.headers.set('Authorization', `Bearer ${token}`)
@@ -33,7 +33,7 @@ export const api = ky.create({
         }
 
         if (response.status === 401) {
-          deleteCookie('sdc-app-token', { cookies: cookieStore })
+          deleteCookie('oclock-token', { cookies: cookieStore })
         }
       },
     ],
