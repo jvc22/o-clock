@@ -19,16 +19,18 @@ export function SignInForm() {
   const [{ success, message, errors }, handleSubmit, isPending] = useFormState(
     signIn,
     () => {
-      router.push('/')
+      router.push('/calendar')
 
-      toast.success('Welcome to your calendar dashboard!')
+      toast.success('Welcome to your calendar!')
     },
   )
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div className="text-center">
-        <h1 className="text-3xl font-bold tracking-tight">o.clock</h1>
+        <h1 className="text-3xl font-bold tracking-tight">
+          <span className="text-primary">o</span>.clock
+        </h1>
 
         <span className="text-muted-foreground">
           Access your calendar panel
@@ -73,7 +75,7 @@ export function SignInForm() {
         )}
       </Button>
 
-      <Button className="w-full" variant="link" size="sm" asChild>
+      <Button className="w-full" variant="link" asChild>
         <Link href="/auth/sign-up">Create new account</Link>
       </Button>
     </form>
