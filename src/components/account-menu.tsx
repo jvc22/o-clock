@@ -1,4 +1,4 @@
-import { Building, ChevronDown, LogOut } from 'lucide-react'
+import { ChevronDown, LogOut } from 'lucide-react'
 
 import { auth } from '@/auth/auth'
 
@@ -15,6 +15,8 @@ import {
 export async function AccountMenu() {
   const user = await auth()
 
+  const shortName = user?.name.split(' ').slice(0, 2).join(' ')
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -28,16 +30,12 @@ export async function AccountMenu() {
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-56">
         <DropdownMenuLabel className="flex flex-col">
-          <span>{user?.name}</span>
+          <span>{shortName}</span>
           <span className="text-xs font-normal text-muted-foreground">
             {user?.email}
           </span>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>
-          <Building className="mr-2 size-4" />
-          <span>Account settings</span>
-        </DropdownMenuItem>
         <DropdownMenuItem className="text-rose-500 dark:text-rose-400">
           <LogOut className="mr-2 size-4" />
           <span>Log out</span>

@@ -21,7 +21,7 @@ export function SignInForm() {
     () => {
       router.push('/calendar')
 
-      toast.success('Welcome to your calendar calendar!')
+      toast.success('Welcome to your calendar!')
     },
   )
 

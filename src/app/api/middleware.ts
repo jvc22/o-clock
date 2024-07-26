@@ -14,8 +14,6 @@ export async function authMiddleware(request: NextRequest) {
 
   const token = bearerToken.split(' ')[1]
 
-  console.log(token)
-
   const decoded = jwt.verify(token, env.JWT_SECRET)
 
   if (!decoded) {

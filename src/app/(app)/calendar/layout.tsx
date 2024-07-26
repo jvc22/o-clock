@@ -9,5 +9,5 @@ export default function DashboardLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
-  return <div className="min-h-screen">{children}</div>
+  return <div className="h-full">{children}</div>
 }
