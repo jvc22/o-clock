@@ -1,4 +1,4 @@
-import { Calendar, ChartSpline } from 'lucide-react'
+import { Calendar, ChartSpline, Notebook } from 'lucide-react'
 
 import { AccountMenu } from './account-menu'
 import NavLink from './nav-link'
@@ -22,6 +22,11 @@ export function Header() {
         <NavLink href="/dashboard">
           <ChartSpline className="size-4" />
           Dashboard
+        </NavLink>
+
+        <NavLink href="/notes">
+          <Notebook className="size-4" />
+          Notes
         </NavLink>
       </nav>
 
