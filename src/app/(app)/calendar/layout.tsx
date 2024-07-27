@@ -4,7 +4,7 @@ export const metadata: Metadata = {
   title: 'Calendar | o.clock',
 }
 
-export default function DashboardLayout({
+export default function CalendarLayout({
   children,
 }: Readonly<{
   children: React.ReactNode

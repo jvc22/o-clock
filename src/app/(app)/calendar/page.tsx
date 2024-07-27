@@ -16,10 +16,10 @@ import { CalendarForm } from './calendar-form'
 
 export default function Calendar() {
   return (
-    <main className="space-y-6">
+    <main className="space-y-4">
       <h1 className="text-3xl font-bold tracking-tight">Calendar</h1>
 
-      <div className="flex items-start gap-6">
+      <div className="flex items-start gap-4">
         <section className="space-y-4">
           <CalendarForm />
 
