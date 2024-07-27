@@ -11,6 +11,7 @@ export function CalendarForm() {
       mode="single"
       selected={date}
       onSelect={setDate}
+      disabled={{ dayOfWeek: [0, 6] }}
       className="w-fit rounded-md border"
     />
   )
