@@ -21,7 +21,7 @@ export async function POST(request: Request) {
 
   const { name, email, password } = userCredentials.data
 
-  const userAlreadyExists = await prisma.users.findUnique({
+  const userAlreadyExists = await prisma.user.findUnique({
     where: {
       email,
     },
@@ -42,7 +42,7 @@ export async function POST(request: Request) {
     hashPassword,
   }
 
-  const user = await prisma.users.create({
+  const user = await prisma.user.create({
     data: newUser,
   })
 
