@@ -1,6 +1,6 @@
 'use client'
 
-import { AlertTriangle } from 'lucide-react'
+import { AlertTriangle, Loader2 } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
@@ -97,7 +97,11 @@ export function SignUpForm() {
       </div>
 
       <Button className="w-full" type="submit" disabled={isPending}>
-        Create account
+        {isPending ? (
+          <Loader2 className="size-4 animate-spin" />
+        ) : (
+          'Create account'
+        )}
       </Button>
 
       <Button className="w-full" variant="link" asChild>

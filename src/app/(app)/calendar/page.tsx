@@ -1,6 +1,7 @@
 import { NotebookPen, Plus, UserPlus } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
+import { Dialog, DialogTrigger } from '@/components/ui/dialog'
 import {
   Table,
   TableBody,
@@ -13,6 +14,7 @@ import { cn } from '@/lib/utils'
 import { timeIntervals } from '@/static/time-intervals'
 
 import { CalendarForm } from './calendar-form'
+import { NewPatientForm } from './new-patient-form'
 
 export default function Calendar() {
   return (
@@ -23,10 +25,16 @@ export default function Calendar() {
         <section className="space-y-4">
           <CalendarForm />
 
-          <Button className="flex w-full items-center">
-            <UserPlus className="mr-2 size-4" />
-            Register new patient
-          </Button>
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button className="flex w-full items-center">
+                <UserPlus className="mr-2 size-4" />
+                Register new patient
+              </Button>
+            </DialogTrigger>
+
+            <NewPatientForm />
+          </Dialog>
 
           <div className="h-px w-full bg-border" />
 

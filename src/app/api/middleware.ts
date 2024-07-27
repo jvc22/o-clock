@@ -5,7 +5,7 @@ import { z } from 'zod'
 import { env } from '@/env'
 import { prisma } from '@/lib/prisma'
 
-export async function authMiddleware(request: NextRequest) {
+export async function authMiddleware(request: Request | NextRequest) {
   const bearerToken = request.headers.get('Authorization')
 
   if (!bearerToken) {
