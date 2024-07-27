@@ -32,7 +32,7 @@ export async function authMiddleware(request: NextRequest) {
 
   const { userId } = payload.data
 
-  const user = await prisma.users.findUnique({
+  const user = await prisma.user.findUnique({
     where: {
       id: userId,
     },
