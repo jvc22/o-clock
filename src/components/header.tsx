@@ -6,14 +6,14 @@ import { ThemeToggle } from './theme/theme-toggle'
 
 export function Header() {
   return (
-    <header className="flex h-16 items-center gap-6">
+    <header className="flex h-16 items-center gap-4">
       <h1 className="text-lg font-bold">
         <span className="text-primary">o</span>.clock
       </h1>
 
       <div className="h-6 w-px bg-border" />
 
-      <nav className="flex items-center gap-6">
+      <nav className="flex items-center gap-4">
         <NavLink href="/calendar">
           <Calendar className="size-4" />
           Calendar
