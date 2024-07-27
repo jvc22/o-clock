@@ -13,7 +13,7 @@ import {
 import { cn } from '@/lib/utils'
 import { timeIntervals } from '@/static/time-intervals'
 
-import { CalendarForm } from './calendar-form'
+import { CalendarForm } from './calendar'
 import { NewPatientForm } from './new-patient-form'
 
 export default function Calendar() {
