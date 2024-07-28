@@ -69,6 +69,30 @@ export function NewPatientForm() {
           </div>
         </div>
 
+        <div className="grid grid-cols-2 gap-2">
+          <div className="space-y-1">
+            <Label>Name of the guardian</Label>
+            <Input
+              id="guardian_name"
+              name="guardian_name"
+              type="text"
+              autoComplete="off"
+              placeholder="Jane Doe"
+            />
+          </div>
+
+          <div className="space-y-1">
+            <Label>Phone of the guardian</Label>
+            <Input
+              id="guardian_phone"
+              name="guardian_phone"
+              type="number"
+              autoComplete="off"
+              placeholder="5511912345678"
+            />
+          </div>
+        </div>
+
         {errors?.name ? (
           <span className="text-xs font-medium text-red-500 dark:text-red-400">
             {errors.name[0]}

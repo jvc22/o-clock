@@ -8,6 +8,8 @@ const registerNewPatientSchem = z.object({
     .string()
     .min(3, { message: 'Name should have at least 3 characters.' }),
   phone: z.string().min(1, { message: 'Please, provide a phone number.' }),
+  guardian_name: z.string().optional(),
+  guardian_phone: z.string().optional(),
 })
 
 export async function registerNewPatient(data: FormData) {
@@ -19,12 +21,19 @@ export async function registerNewPatient(data: FormData) {
     return { success: false, message: null, errors }
   }
 
-  const { name, phone } = result.data
+  const {
+    name,
+    phone,
+    guardian_name: guardianName,
+    guardian_phone: guardianPhone,
+  } = result.data
 
   try {
     await registerNewPatientFn({
       name,
       phone,
+      guardianName,
+      guardianPhone,
     })
   } catch (err) {
     if (err instanceof HTTPError) {
