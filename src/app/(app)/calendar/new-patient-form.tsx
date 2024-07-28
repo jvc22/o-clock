@@ -24,6 +24,7 @@ export function NewPatientForm() {
     () => {
       toast.success('Patient registered successfully!')
     },
+    true,
   )
 
   return (

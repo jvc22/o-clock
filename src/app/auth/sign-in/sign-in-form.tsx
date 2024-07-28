@@ -23,6 +23,7 @@ export function SignInForm() {
 
       toast.success('Welcome to your calendar!')
     },
+    false,
   )
 
   return (
