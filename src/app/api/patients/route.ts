@@ -17,6 +17,8 @@ export async function POST(request: Request) {
   const bodySchema = z.object({
     name: z.string(),
     phone: z.string(),
+    guardianName: z.string().optional(),
+    guardianPhone: z.string().optional(),
   })
 
   const patient = bodySchema.safeParse(body)
@@ -25,12 +27,14 @@ export async function POST(request: Request) {
     throw new Error()
   }
 
-  const { name, phone } = patient.data
+  const { name, phone, guardianName, guardianPhone } = patient.data
 
   const newPatient = await prisma.patient.create({
     data: {
       name,
       phone,
+      guardianName,
+      guardianPhone,
       userId: user.id,
     },
   })
