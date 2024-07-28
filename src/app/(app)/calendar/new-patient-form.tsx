@@ -1,8 +1,10 @@
 'use client'
 
 import { AlertTriangle, Loader2 } from 'lucide-react'
+import Image from 'next/image'
 import { toast } from 'sonner'
 
+import newPatientImg from '@/assets/users/new-patient.svg'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { Button } from '@/components/ui/button'
 import {
@@ -35,6 +37,8 @@ export function NewPatientForm() {
           Register a new patient to your database
         </DialogDescription>
       </DialogHeader>
+
+      <Image src={newPatientImg} alt="" />
 
       <form onSubmit={handleSubmit} className="space-y-4">
         {!success && message && (
