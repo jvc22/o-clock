@@ -1,8 +1,10 @@
 'use client'
 
 import { AlertTriangle, Loader2 } from 'lucide-react'
+import Image from 'next/image'
 import { toast } from 'sonner'
 
+import newPatientImg from '@/assets/users/new-patient.svg'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { Button } from '@/components/ui/button'
 import {
@@ -36,6 +38,8 @@ export function NewPatientForm() {
         </DialogDescription>
       </DialogHeader>
 
+      <Image src={newPatientImg} alt="" />
+
       <form onSubmit={handleSubmit} className="space-y-4">
         {!success && message && (
           <Alert variant="destructive">
@@ -62,6 +66,30 @@ export function NewPatientForm() {
             <Input
               id="phone"
               name="phone"
+              type="number"
+              autoComplete="off"
+              placeholder="5511912345678"
+            />
+          </div>
+        </div>
+
+        <div className="grid grid-cols-2 gap-2">
+          <div className="space-y-1">
+            <Label>Name of the guardian</Label>
+            <Input
+              id="guardian_name"
+              name="guardian_name"
+              type="text"
+              autoComplete="off"
+              placeholder="Jane Doe"
+            />
+          </div>
+
+          <div className="space-y-1">
+            <Label>Phone of the guardian</Label>
+            <Input
+              id="guardian_phone"
+              name="guardian_phone"
               type="number"
               autoComplete="off"
               placeholder="5511912345678"
