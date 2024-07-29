@@ -1,8 +1,8 @@
-import { NextRequest, NextResponse } from 'next/server'
+import { NextResponse } from 'next/server'
 
 import { authMiddleware } from '../middleware'
 
-export async function GET(request: NextRequest) {
+export async function GET(request: Request) {
   const { user } = await authMiddleware(request)
 
   if (!user) {
