@@ -17,6 +17,7 @@ import {
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { useFormState } from '@/hooks/use-form-state'
+import { queryClient } from '@/lib/react-query'
 
 import { registerNewPatient } from './actions'
 
@@ -25,6 +26,10 @@ export function NewPatientForm() {
     registerNewPatient,
     () => {
       toast.success('Patient registered successfully!')
+
+      queryClient.invalidateQueries({
+        queryKey: ['patients'],
+      })
     },
     true,
   )
@@ -38,7 +43,7 @@ export function NewPatientForm() {
         </DialogDescription>
       </DialogHeader>
 
-      <Image src={newPatientImg} alt="" />
+      <Image src={newPatientImg} alt="new-patient-image" />
 
       <form onSubmit={handleSubmit} className="space-y-4">
         {!success && message && (
@@ -62,7 +67,7 @@ export function NewPatientForm() {
           </div>
 
           <div className="space-y-1">
-            <Label>Phone number*</Label>
+            <Label>Phone*</Label>
             <Input
               id="phone"
               name="phone"
@@ -97,17 +102,19 @@ export function NewPatientForm() {
           </div>
         </div>
 
-        {errors?.name ? (
-          <span className="text-xs font-medium text-red-500 dark:text-red-400">
-            {errors.name[0]}
-          </span>
-        ) : (
-          errors?.phone && (
+        <div>
+          {errors?.name ? (
             <span className="text-xs font-medium text-red-500 dark:text-red-400">
-              {errors.phone[0]}
+              {errors.name[0]}
             </span>
-          )
-        )}
+          ) : (
+            errors?.phone && (
+              <span className="text-xs font-medium text-red-500 dark:text-red-400">
+                {errors.phone[0]}
+              </span>
+            )
+          )}
+        </div>
 
         <div>
           <span className="text-xs text-muted-foreground">
