@@ -33,6 +33,7 @@ interface AppointmentTableRowProps {
     patient: {
       id: string
       name: string
+      phone: string
       guardianName: string | null
     }
     isChecked: boolean
@@ -187,10 +188,17 @@ export function AppointmentTableRow({
                     )}
 
                     <Button
+                      asChild
                       className="size-6 p-0 transition-all hover:-translate-y-1 hover:text-green-600"
                       variant="ghost"
                     >
-                      <MessageCircle className="size-4" />
+                      <a
+                        href={`https://wa.me/${appointment.patient.phone}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <MessageCircle className="size-4" />
+                      </a>
                     </Button>
                   </div>
                 </HoverCardContent>
