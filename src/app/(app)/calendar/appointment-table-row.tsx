@@ -1,10 +1,15 @@
 'use client'
 
 import { useMutation } from '@tanstack/react-query'
-import { Plus } from 'lucide-react'
+import { EllipsisVertical, MessageCircle, Plus, Trash, X } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogTrigger } from '@/components/ui/dialog'
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from '@/components/ui/hover-card'
 import { TableCell, TableRow } from '@/components/ui/table'
 import { useDate } from '@/contexts/date'
 import { checkAppointment } from '@/http/check-appointment'
@@ -29,6 +34,7 @@ interface AppointmentTableRowProps {
       guardianName: string | null
     }
     isChecked: boolean
+    isRecurring: boolean
   }[]
 }
 
@@ -102,25 +108,64 @@ export function AppointmentTableRow({
           className={cn(index > 0 && 'border-l')}
         >
           {appointment?.id ? (
-            <Button
-              className={cn(
-                'h-8 w-full',
-                appointment.isChecked &&
-                  'border-primary text-primary hover:text-primary',
-              )}
-              onClick={() =>
-                checkAppointmentFn({
-                  id: appointment.id,
-                  date: weekdays[index],
-                  isChecked: !appointment.isChecked,
-                })
-              }
-              variant="outline"
-            >
-              {appointment?.patient.name.length > 16
-                ? `${appointment.patient.name.slice(0, 16)}...`
-                : appointment.patient.name}
-            </Button>
+            <div className="flex items-center">
+              <Button
+                className={cn(
+                  'h-8 w-4/5 rounded-r-none',
+                  appointment.isChecked &&
+                    'border-primary text-primary hover:text-primary',
+                )}
+                onClick={() =>
+                  checkAppointmentFn({
+                    id: appointment.id,
+                    date: weekdays[index],
+                    isChecked: !appointment.isChecked,
+                  })
+                }
+                variant="outline"
+              >
+                {appointment?.patient.name.length > 12
+                  ? `${appointment.patient.name.slice(0, 12)}...`
+                  : appointment.patient.name}
+              </Button>
+
+              <HoverCard openDelay={200} closeDelay={100}>
+                <HoverCardTrigger asChild>
+                  <Button
+                    variant="outline"
+                    className="h-8 w-1/5 rounded-l-none border-l-0 p-0"
+                  >
+                    <EllipsisVertical className="size-4" />
+                  </Button>
+                </HoverCardTrigger>
+                <HoverCardContent align="end" className="w-fit p-2">
+                  <div className="flex items-center">
+                    <Button
+                      className="size-6 p-0 transition-all hover:-translate-y-1 hover:text-red-500"
+                      variant="ghost"
+                    >
+                      <Trash className="size-4" />
+                    </Button>
+
+                    {appointment.isRecurring && (
+                      <Button
+                        className="size-6 p-0 transition-all hover:-translate-y-1 hover:text-amber-500"
+                        variant="ghost"
+                      >
+                        <X className="size-4" />
+                      </Button>
+                    )}
+
+                    <Button
+                      className="size-6 p-0 transition-all hover:-translate-y-1 hover:text-green-600"
+                      variant="ghost"
+                    >
+                      <MessageCircle className="size-4" />
+                    </Button>
+                  </div>
+                </HoverCardContent>
+              </HoverCard>
+            </div>
           ) : (
             <Dialog>
               <DialogTrigger asChild>

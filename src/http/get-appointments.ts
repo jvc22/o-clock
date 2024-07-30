@@ -11,6 +11,7 @@ export interface GetAppointmentsResponse {
       name: string
       guardianName: string | null
     }
+    isRecurring: boolean
     isChecked: boolean
   }[][]
 }

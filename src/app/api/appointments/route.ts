@@ -141,21 +141,14 @@ export async function GET(request: Request) {
               ? selectedAppointment.weekday
               : null,
             time: selectedAppointment.time,
-            isChecked: selectedAppointment.isRecurring
-              ? selectedAppointment.dailyOverrides.some(
-                  (override) =>
-                    override.date.toISOString().slice(0, 10) ===
-                      day.toISOString().slice(0, 10) &&
-                    override.time === timeIndex &&
-                    override.isChecked,
-                )
-              : selectedAppointment.dailyOverrides.some(
-                  (override) =>
-                    override.date.toISOString().slice(0, 10) ===
-                      day.toISOString().slice(0, 10) &&
-                    override.time === timeIndex &&
-                    override.isChecked,
-                ),
+            isRecurring: selectedAppointment.isRecurring,
+            isChecked: selectedAppointment.dailyOverrides.some(
+              (override) =>
+                override.date.toISOString().slice(0, 10) ===
+                  day.toISOString().slice(0, 10) &&
+                override.time === timeIndex &&
+                override.isChecked,
+            ),
           }
         : null
     }),
