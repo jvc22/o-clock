@@ -24,13 +24,13 @@ export async function AccountMenu() {
           variant="outline"
           className="items-cente group flex select-none gap-2 px-3"
         >
-          {user?.name}
+          {shortName}
           <ChevronDown className="size-4" />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-56">
         <DropdownMenuLabel className="flex flex-col">
-          <span>{shortName}</span>
+          <span>{user?.name}</span>
           <span className="text-xs font-normal text-muted-foreground">
             {user?.email}
           </span>

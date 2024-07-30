@@ -2,8 +2,9 @@ import { HTTPError } from 'ky'
 import { z } from 'zod'
 
 import { registerNewPatientFn } from '@/http/register-new-patient'
+import { scheduleNewAppointmentFn } from '@/http/schedule-new-appointment'
 
-const registerNewPatientSchem = z.object({
+const registerNewPatientSchema = z.object({
   name: z
     .string()
     .min(3, { message: 'Name should have at least 3 characters.' }),
@@ -13,7 +14,7 @@ const registerNewPatientSchem = z.object({
 })
 
 export async function registerNewPatient(data: FormData) {
-  const result = registerNewPatientSchem.safeParse(Object.fromEntries(data))
+  const result = registerNewPatientSchema.safeParse(Object.fromEntries(data))
 
   if (!result.success) {
     const errors = result.error.flatten().fieldErrors
@@ -34,6 +35,55 @@ export async function registerNewPatient(data: FormData) {
       phone,
       guardianName,
       guardianPhone,
+    })
+  } catch (err) {
+    if (err instanceof HTTPError) {
+      const { message } = await err.response.json()
+
+      return { success: false, message, errors: null }
+    }
+
+    return {
+      success: false,
+      message: 'Unexpected error. Try again in a few minutes.',
+      errors: null,
+    }
+  }
+
+  return { success: true, message: null, errors: null }
+}
+
+const scheduleNewAppointmentSchema = z.object({
+  patient: z.string().min(1, { message: 'Please, select a patient.' }),
+  date: z.string().datetime(),
+  time: z.coerce.number(),
+  is_recurring: z.coerce.boolean(),
+})
+
+export async function scheduleNewAppointment(data: FormData) {
+  const result = scheduleNewAppointmentSchema.safeParse(
+    Object.fromEntries(data),
+  )
+
+  if (!result.success) {
+    const errors = result.error.flatten().fieldErrors
+
+    return { success: false, message: null, errors }
+  }
+
+  const {
+    patient: patientId,
+    date,
+    time,
+    is_recurring: isRecurring,
+  } = result.data
+
+  try {
+    await scheduleNewAppointmentFn({
+      patientId,
+      date,
+      time,
+      isRecurring,
     })
   } catch (err) {
     if (err instanceof HTTPError) {
