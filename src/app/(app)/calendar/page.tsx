@@ -1,10 +1,12 @@
 import { NotebookPen, UserPlus } from 'lucide-react'
+import Link from 'next/link'
 
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogTrigger } from '@/components/ui/dialog'
 
 import { AppointmentsTable } from './appointments-table'
 import { CalendarForm } from './calendar'
+import { NewNoteForm } from './new-note-form'
 import { NewPatientForm } from './new-patient-form'
 
 export default function Calendar() {
@@ -30,13 +32,19 @@ export default function Calendar() {
           <div className="h-px w-full bg-border" />
 
           <div className="grid grid-cols-2">
-            <Button variant="secondary" className="flex items-center">
-              <NotebookPen className="mr-2 size-4" />
-              New note
-            </Button>
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button variant="secondary" className="flex items-center">
+                  <NotebookPen className="mr-2 size-4" />
+                  New note
+                </Button>
+              </DialogTrigger>
 
-            <Button variant="link" className="flex items-center">
-              See your notes
+              <NewNoteForm />
+            </Dialog>
+
+            <Button variant="link" className="flex items-center" asChild>
+              <Link href="/notes">See your notes</Link>
             </Button>
           </div>
         </section>
