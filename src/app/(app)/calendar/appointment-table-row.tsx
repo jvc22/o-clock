@@ -2,6 +2,7 @@
 
 import { useMutation } from '@tanstack/react-query'
 import { EllipsisVertical, MessageCircle, Plus, Trash, X } from 'lucide-react'
+import { toast } from 'sonner'
 
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogTrigger } from '@/components/ui/dialog'
@@ -12,6 +13,7 @@ import {
 } from '@/components/ui/hover-card'
 import { TableCell, TableRow } from '@/components/ui/table'
 import { useDate } from '@/contexts/date'
+import { cancelAppointment } from '@/http/cancel-appointment'
 import { checkAppointment } from '@/http/check-appointment'
 import { GetAppointmentsResponse } from '@/http/get-appointments'
 import { queryClient } from '@/lib/react-query'
@@ -31,6 +33,7 @@ interface AppointmentTableRowProps {
     patient: {
       id: string
       name: string
+      phone: string
       guardianName: string | null
     }
     isChecked: boolean
@@ -96,6 +99,17 @@ export function AppointmentTableRow({
     },
   })
 
+  const { mutateAsync: cancelAppointmentFn } = useMutation({
+    mutationFn: cancelAppointment,
+    onSuccess: async () => {
+      queryClient.invalidateQueries({
+        queryKey: ['appointments'],
+      })
+
+      toast.success('Appointment cancelled successfully!')
+    },
+  })
+
   return (
     <TableRow className="group border-0">
       <TableCell className="pl-3 font-mono text-muted-foreground transition-all group-hover:text-foreground">
@@ -141,26 +155,50 @@ export function AppointmentTableRow({
                 <HoverCardContent align="end" className="w-fit p-2">
                   <div className="flex items-center">
                     <Button
-                      className="size-6 p-0 transition-all hover:-translate-y-1 hover:text-red-500"
                       variant="ghost"
+                      onClick={() =>
+                        cancelAppointmentFn({
+                          id: appointment.id,
+                          isRecurring: appointment.isRecurring,
+                          ...(appointment.isRecurring && {
+                            endDate: weekdays[index],
+                          }),
+                        })
+                      }
+                      className="size-6 p-0 transition-all hover:-translate-y-1 hover:text-red-500"
                     >
                       <Trash className="size-4" />
                     </Button>
 
                     {appointment.isRecurring && (
                       <Button
-                        className="size-6 p-0 transition-all hover:-translate-y-1 hover:text-amber-500"
                         variant="ghost"
+                        onClick={() =>
+                          cancelAppointmentFn({
+                            id: appointment.id,
+                            isRecurring: appointment.isRecurring,
+                            date: weekdays[index],
+                            time,
+                          })
+                        }
+                        className="size-6 p-0 transition-all hover:-translate-y-1 hover:text-amber-500"
                       >
                         <X className="size-4" />
                       </Button>
                     )}
 
                     <Button
+                      asChild
                       className="size-6 p-0 transition-all hover:-translate-y-1 hover:text-green-600"
                       variant="ghost"
                     >
-                      <MessageCircle className="size-4" />
+                      <a
+                        href={`https://wa.me/${appointment.patient.phone}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <MessageCircle className="size-4" />
+                      </a>
                     </Button>
                   </div>
                 </HoverCardContent>

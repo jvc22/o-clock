@@ -3,6 +3,8 @@ import { z } from 'zod'
 
 import { prisma } from '@/lib/prisma'
 
+import { authMiddleware } from '../../middleware'
+
 type RouteParams = {
   id: string
 }
@@ -24,6 +26,12 @@ function parseParams(routeParams: RouteParams) {
 }
 
 export async function PUT(request: Request, params: RouteParams) {
+  const { user } = await authMiddleware(request)
+
+  if (!user) {
+    return NextResponse.json({ message: 'User not found.' }, { status: 401 })
+  }
+
   const appointmentId = parseParams(params)
 
   const body = await request.json()
@@ -36,10 +44,7 @@ export async function PUT(request: Request, params: RouteParams) {
   const result = bodySchema.safeParse(body)
   if (!result.success) {
     console.error(result.error)
-    return NextResponse.json(
-      { message: 'Invalid request body.' },
-      { status: 400 },
-    )
+    throw new Error()
   }
 
   const { isChecked, date } = result.data
@@ -134,4 +139,63 @@ export async function PUT(request: Request, params: RouteParams) {
 
     return NextResponse.json({}, { status: 200 })
   }
+}
+
+export async function DELETE(request: Request, params: RouteParams) {
+  const { user } = await authMiddleware(request)
+
+  if (!user) {
+    return NextResponse.json({ message: 'User not found.' }, { status: 401 })
+  }
+
+  const appointmentId = parseParams(params)
+
+  const body = await request.json()
+
+  const bodySchema = z.object({
+    isRecurring: z.coerce.boolean(),
+    endDate: z.string().datetime().optional(),
+    date: z.string().datetime().optional(),
+    time: z.coerce.number().optional(),
+  })
+
+  const result = bodySchema.safeParse(body)
+  if (!result.success) {
+    console.error(result.error)
+    throw new Error()
+  }
+
+  const { isRecurring, endDate, date, time } = result.data
+
+  if (isRecurring) {
+    if (endDate) {
+      await prisma.appointment.update({
+        where: {
+          id: appointmentId,
+        },
+        data: {
+          endDate: new Date(endDate),
+        },
+      })
+    }
+
+    if (date && time) {
+      await prisma.dailyOverride.create({
+        data: {
+          appointmentId,
+          date: new Date(date),
+          time,
+          isCancelled: true,
+        },
+      })
+    }
+  } else {
+    await prisma.appointment.delete({
+      where: {
+        id: appointmentId,
+      },
+    })
+  }
+
+  return NextResponse.json({}, { status: 200 })
 }

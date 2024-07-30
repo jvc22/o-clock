@@ -126,8 +126,8 @@ export function NewAppointmentForm({ date, time }: NewAppointmentFormProps) {
           <Input type="number" name="time" value={time} onChange={() => {}} />
         </div>
 
-        <div className="flex items-center justify-between">
-          <Label>Is this a recurring appointment (should be repeated)?</Label>
+        <div className="flex items-center gap-2">
+          <Label>Should this appointment be repeated?</Label>
           <Checkbox name="is_recurring" className="size-6 border-input" />
         </div>
 

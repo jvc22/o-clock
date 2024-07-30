@@ -9,6 +9,7 @@ export function CalendarForm() {
   return (
     <Calendar
       mode="single"
+      ISOWeek
       required
       selected={date}
       onSelect={setDate}

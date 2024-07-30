@@ -9,6 +9,7 @@ export interface GetAppointmentsResponse {
     patient: {
       id: string
       name: string
+      phone: string
       guardianName: string | null
     }
     isRecurring: boolean

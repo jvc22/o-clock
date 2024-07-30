@@ -67,6 +67,7 @@ export async function GET(request: Request) {
         select: {
           id: true,
           name: true,
+          phone: true,
           guardianName: true,
         },
       },
@@ -100,7 +101,7 @@ export async function GET(request: Request) {
             appointment.time === timeIndex &&
             appointment.startDate &&
             appointment.startDate <= day &&
-            (appointment.endDate === null || appointment.endDate >= day)
+            (appointment.endDate === null || appointment.endDate > day)
           )
         } else {
           const override = appointment.dailyOverrides.find(
@@ -184,20 +185,16 @@ export async function POST(request: Request) {
   const weekday = getDay(date)
 
   if (isRecurring) {
-    const existingRecurringAppointment = await prisma.appointment.findFirst({
+    const conflictingRecurringAppointment = await prisma.appointment.findFirst({
       where: {
         isRecurring: true,
         weekday,
         time,
-        AND: [
-          {
-            OR: [{ endDate: null }, { endDate: { gte: new Date(date) } }],
-          },
-        ],
+        endDate: null,
       },
     })
 
-    if (existingRecurringAppointment) {
+    if (conflictingRecurringAppointment) {
       return NextResponse.json(
         {
           message:
