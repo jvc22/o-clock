@@ -142,6 +142,7 @@ export async function GET(request: Request) {
               ? selectedAppointment.weekday
               : null,
             time: selectedAppointment.time,
+            endDate: selectedAppointment.endDate,
             isRecurring: selectedAppointment.isRecurring,
             isChecked: selectedAppointment.dailyOverrides.some(
               (override) =>

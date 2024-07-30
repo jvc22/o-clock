@@ -6,6 +6,7 @@ export interface GetAppointmentsResponse {
     date: Date | null
     weekday: number | null
     time: number
+    endDate: Date | null
     patient: {
       id: string
       name: string
