@@ -5,6 +5,31 @@ import { prisma } from '@/lib/prisma'
 
 import { authMiddleware } from '../middleware'
 
+export async function GET(request: Request) {
+  const { user } = await authMiddleware(request)
+
+  if (!user) {
+    return NextResponse.json({ message: 'User not found.' }, { status: 401 })
+  }
+
+  const notes = await prisma.note.findMany({
+    where: {
+      userId: user.id,
+    },
+    select: {
+      id: true,
+      createdAt: true,
+      text: true,
+    },
+  })
+
+  if (!notes) {
+    return NextResponse.json({ message: 'Notes not found.' }, { status: 404 })
+  }
+
+  return NextResponse.json({ notes }, { status: 200 })
+}
+
 export async function POST(request: Request) {
   const { user } = await authMiddleware(request)
 
@@ -31,6 +56,7 @@ export async function POST(request: Request) {
     data: {
       text,
       createdAt: new Date(date),
+      userId: user.id,
     },
   })
 
