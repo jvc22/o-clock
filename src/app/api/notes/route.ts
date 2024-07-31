@@ -16,6 +16,7 @@ export async function POST(request: Request) {
 
   const bodySchema = z.object({
     text: z.string(),
+    date: z.string(),
   })
 
   const note = bodySchema.safeParse(body)
@@ -24,11 +25,12 @@ export async function POST(request: Request) {
     throw new Error()
   }
 
-  const { text } = note.data
+  const { text, date } = note.data
 
   const newNote = await prisma.note.create({
     data: {
       text,
+      createdAt: new Date(date),
     },
   })
 
