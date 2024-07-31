@@ -9,6 +9,7 @@ interface FormState {
 export function useFormState(
   action: (data: FormData) => Promise<FormState>,
   onSuccess?: () => Promise<void> | void,
+  shouldResetForm?: boolean,
   initialState?: FormState,
 ) {
   const [isPending, startTransition] = useTransition()
@@ -31,6 +32,10 @@ export function useFormState(
       const state = await action(data)
 
       if (state.success && onSuccess) {
+        if (shouldResetForm) {
+          form.reset()
+        }
+
         await onSuccess()
       }
 

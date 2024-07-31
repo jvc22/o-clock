@@ -22,7 +22,7 @@ export async function POST(request: Request) {
 
   const { email, password } = userCredentials.data
 
-  const user = await prisma.users.findUnique({
+  const user = await prisma.user.findUnique({
     where: {
       email,
     },
@@ -41,7 +41,7 @@ export async function POST(request: Request) {
     )
   }
 
-  const token = jwt.sign({ id: user.id }, env.JWT_SECRET, {
+  const token = jwt.sign({ userId: user.id }, env.JWT_SECRET, {
     expiresIn: 60 * 60 * 24 * 7,
   })
 

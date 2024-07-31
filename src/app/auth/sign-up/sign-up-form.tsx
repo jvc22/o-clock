@@ -1,6 +1,6 @@
 'use client'
 
-import { AlertTriangle } from 'lucide-react'
+import { AlertTriangle, Loader2 } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
@@ -26,12 +26,15 @@ export function SignUpForm() {
         },
       })
     },
+    true,
   )
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div className="text-center">
-        <h1 className="text-3xl font-bold tracking-tight">o.clock</h1>
+        <h1 className="text-3xl font-bold tracking-tight">
+          <span className="text-primary">o</span>.clock
+        </h1>
 
         <span className="text-muted-foreground">
           Register and enjoy your time
@@ -95,10 +98,14 @@ export function SignUpForm() {
       </div>
 
       <Button className="w-full" type="submit" disabled={isPending}>
-        Create account
+        {isPending ? (
+          <Loader2 className="size-4 animate-spin" />
+        ) : (
+          'Create account'
+        )}
       </Button>
 
-      <Button className="w-full" variant="link" size="sm" asChild>
+      <Button className="w-full" variant="link" asChild>
         <Link href="/auth/sign-in">Already registred? Sign in</Link>
       </Button>
     </form>

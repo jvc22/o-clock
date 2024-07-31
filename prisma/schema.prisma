@@ -7,13 +7,79 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Users {
-  id        String   @id @default(uuid())
-  name      String
-  email     String   @unique
-  hashPassword  String
+model User {
+  id           String        @id @default(cuid())
+  name         String
+  email        String        @unique
+  hashPassword String
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  patients     Patient[]
+  appointments Appointment[]
+  notes        Note[]
+
+  @@map("users")
+}
+
+model Patient {
+  id            String        @id @default(cuid())
+  name          String
+  phone         String
+  guardianName  String?
+  guardianPhone String?
+  userId        String
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  appointments  Appointment[]
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@map("patients")
+}
+
+model Appointment {
+  id             String          @id @default(cuid())
+  userId         String?
+  patientId      String
+  date           DateTime?
+  weekday        Int?
+  time           Int
+  isRecurring    Boolean         @default(false)
+  startDate      DateTime?
+  endDate        DateTime?
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  dailyOverrides DailyOverride[]
+
+  user    User?    @relation(fields: [userId], references: [id])
+  patient Patient? @relation(fields: [patientId], references: [id])
+
+  @@map("appointments")
+}
+
+model DailyOverride {
+  id            String   @id @default(cuid())
+  appointmentId String
+  date          DateTime
+  time          Int
+  isCancelled   Boolean  @default(false)
+  isChecked     Boolean  @default(false)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  appointment Appointment? @relation(fields: [appointmentId], references: [id], onDelete: Cascade)
+
+  @@map("dailyOverride")
+}
+
+model Note {
+  id        String   @id @default(cuid())
+  text      String
+  userId    String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@map("users")
+  user User? @relation(fields: [userId], references: [id])
+
+  @@map("notes")
 }
