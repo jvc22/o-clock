@@ -119,7 +119,7 @@ export async function addNewNote(data: FormData) {
   const { text } = result.data
 
   try {
-    await addNewNoteFn({ text })
+    await addNewNoteFn({ text, date: new Date().toDateString() })
   } catch (err) {
     if (err instanceof HTTPError) {
       const { message } = await err.response.json()
