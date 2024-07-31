@@ -127,8 +127,12 @@ export function NewAppointmentForm({ date, time }: NewAppointmentFormProps) {
         </div>
 
         <div className="flex items-center gap-2">
-          <Label>Should this appointment be repeated?</Label>
-          <Checkbox name="is_recurring" className="size-6 border-input" />
+          <Label htmlFor="is_recurring">Repeat every week?</Label>
+          <Checkbox
+            id="is_recurring"
+            name="is_recurring"
+            className="size-6 border-input"
+          />
         </div>
 
         <div>

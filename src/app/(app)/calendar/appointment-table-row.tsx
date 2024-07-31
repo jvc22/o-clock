@@ -30,6 +30,7 @@ interface AppointmentTableRowProps {
     date: Date | null
     weekday: number | null
     time: number
+    endDate: Date | null
     patient: {
       id: string
       name: string
@@ -154,21 +155,23 @@ export function AppointmentTableRow({
                 </HoverCardTrigger>
                 <HoverCardContent align="end" className="w-fit p-2">
                   <div className="flex items-center">
-                    <Button
-                      variant="ghost"
-                      onClick={() =>
-                        cancelAppointmentFn({
-                          id: appointment.id,
-                          isRecurring: appointment.isRecurring,
-                          ...(appointment.isRecurring && {
-                            endDate: weekdays[index],
-                          }),
-                        })
-                      }
-                      className="size-6 p-0 transition-all hover:-translate-y-1 hover:text-red-500"
-                    >
-                      <Trash className="size-4" />
-                    </Button>
+                    {!appointment.endDate && (
+                      <Button
+                        variant="ghost"
+                        onClick={() =>
+                          cancelAppointmentFn({
+                            id: appointment.id,
+                            isRecurring: appointment.isRecurring,
+                            ...(appointment.isRecurring && {
+                              endDate: weekdays[index],
+                            }),
+                          })
+                        }
+                        className="size-6 p-0 transition-all hover:-translate-y-1 hover:text-red-500"
+                      >
+                        <Trash className="size-4" />
+                      </Button>
+                    )}
 
                     {appointment.isRecurring && (
                       <Button
