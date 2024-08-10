@@ -22,6 +22,8 @@ export function AppointmentsTable() {
 
   const weekdays = getWeekDays(date || new Date())
 
+  const weekdaysNumbers = weekdays.map((weekday) => new Date(weekday).getDate())
+
   const { data, isLoading } = useQuery({
     queryKey: ['appointments', weekdays],
     queryFn: () => getAppointments(weekdays),
@@ -33,11 +35,26 @@ export function AppointmentsTable() {
         <TableHeader>
           <TableRow>
             <TableHead className="w-1/6 pl-3">Time</TableHead>
-            <TableHead className="w-1/6 text-center">Monday</TableHead>
-            <TableHead className="w-1/6 text-center">Tuesday</TableHead>
-            <TableHead className="w-1/6 text-center">Wednesday</TableHead>
-            <TableHead className="w-1/6 text-center">Thursday</TableHead>
-            <TableHead className="w-1/6 text-center">Friday</TableHead>
+
+            <TableHead className="w-1/6 text-center">
+              Monday ({weekdaysNumbers[0]})
+            </TableHead>
+
+            <TableHead className="w-1/6 text-center">
+              Tuesday ({weekdaysNumbers[1]})
+            </TableHead>
+
+            <TableHead className="w-1/6 text-center">
+              Wednesday ({weekdaysNumbers[2]})
+            </TableHead>
+
+            <TableHead className="w-1/6 text-center">
+              Thursday ({weekdaysNumbers[3]})
+            </TableHead>
+
+            <TableHead className="w-1/6 text-center">
+              Friday ({weekdaysNumbers[4]})
+            </TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
