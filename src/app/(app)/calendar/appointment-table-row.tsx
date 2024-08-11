@@ -16,7 +16,7 @@ import { useDate } from '@/contexts/date'
 import { cancelAppointment } from '@/http/cancel-appointment'
 import { checkAppointment } from '@/http/check-appointment'
 import { GetAppointmentsResponse } from '@/http/get-appointments'
-import { queryClient } from '@/lib/react-query'
+import { getQueryClient } from '@/lib/react-query'
 import { cn } from '@/lib/utils'
 import { timeIntervals } from '@/static/time-intervals'
 import { getWeekDays } from '@/utils/get-week-days'
@@ -46,6 +46,8 @@ export function AppointmentTableRow({
   time,
   appointments,
 }: AppointmentTableRowProps) {
+  const queryClient = getQueryClient()
+
   const { date } = useDate()
   const weekdays = getWeekDays(date || new Date())
 

@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
 import { closeNote } from '@/http/close-note'
 import { GetNotesResponse } from '@/http/get-notes'
-import { queryClient } from '@/lib/react-query'
+import { getQueryClient } from '@/lib/react-query'
 
 interface NoteCardProps {
   note: {
@@ -18,6 +18,8 @@ interface NoteCardProps {
 }
 
 export function NoteCard({ note: { id, createdAt, text } }: NoteCardProps) {
+  const queryClient = getQueryClient()
+
   const formattedDate = format(createdAt, 'EEE, PPP')
 
   const shortTitle = text.length > 24 ? `${text.slice(0, 24).trim()}...` : text
