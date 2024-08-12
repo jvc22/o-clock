@@ -33,6 +33,7 @@ function calculateWeekdayOccurrences(
   weekday: number,
 ) {
   const daysInMonth = eachDayOfInterval({ start: startDate, end: endDate })
+
   return daysInMonth.filter((day) => getDay(day) === weekday).length
 }
 
