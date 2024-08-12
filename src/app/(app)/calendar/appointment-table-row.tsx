@@ -90,7 +90,11 @@ export function AppointmentTableRow({
   const { mutateAsync: checkAppointmentFn } = useMutation({
     mutationFn: checkAppointment,
     onSuccess: async (_, { id }) => {
-      const appointment = appointments.find(
+      const filteredAppointments = appointments.filter(
+        (appointment) => appointment !== null,
+      )
+
+      const appointment = filteredAppointments.find(
         (appointment) => appointment.id === id,
       )
 
