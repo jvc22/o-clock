@@ -179,7 +179,7 @@ export async function DELETE(request: Request, params: RouteParams) {
       })
     }
 
-    if (date && time) {
+    if (date && time !== undefined && time >= 0) {
       await prisma.dailyOverride.create({
         data: {
           appointmentId,
