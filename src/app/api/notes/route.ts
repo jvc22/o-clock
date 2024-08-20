@@ -21,6 +21,9 @@ export async function GET(request: Request) {
       createdAt: true,
       text: true,
     },
+    orderBy: {
+      id: 'desc',
+    },
   })
 
   if (!notes) {

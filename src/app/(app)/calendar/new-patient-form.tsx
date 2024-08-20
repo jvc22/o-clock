@@ -17,11 +17,13 @@ import {
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { useFormState } from '@/hooks/use-form-state'
-import { queryClient } from '@/lib/react-query'
+import { getQueryClient } from '@/lib/react-query'
 
 import { registerNewPatient } from './actions'
 
 export function NewPatientForm() {
+  const queryClient = getQueryClient()
+
   const [{ success, message, errors }, handleSubmit, isPending] = useFormState(
     registerNewPatient,
     () => {
