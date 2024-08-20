@@ -32,6 +32,7 @@ export async function GET(request: Request) {
         },
         date: today,
         isChecked: true,
+        isCancelled: false,
       },
     }),
     prisma.dailyOverride.count({
@@ -41,11 +42,10 @@ export async function GET(request: Request) {
         },
         date: yesterday,
         isChecked: true,
+        isCancelled: false,
       },
     }),
   ])
-
-  console.log(todayChecks, yesterdayChecks)
 
   const difference = todayChecks - yesterdayChecks
   let percentageChange = yesterdayChecks

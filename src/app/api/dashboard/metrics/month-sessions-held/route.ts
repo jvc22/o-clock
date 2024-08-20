@@ -39,6 +39,7 @@ export async function GET(request: Request) {
           lte: endOfCurrentMonth,
         },
         isChecked: true,
+        isCancelled: false,
       },
     }),
     prisma.dailyOverride.count({
@@ -51,6 +52,7 @@ export async function GET(request: Request) {
           lte: endOfLastMonth,
         },
         isChecked: true,
+        isCancelled: false,
       },
     }),
   ])

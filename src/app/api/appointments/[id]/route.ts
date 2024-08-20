@@ -180,14 +180,32 @@ export async function DELETE(request: Request, params: RouteParams) {
     }
 
     if (date && time !== undefined && time >= 0) {
-      await prisma.dailyOverride.create({
-        data: {
+      const existingOverride = await prisma.dailyOverride.findFirst({
+        where: {
           appointmentId,
           date: new Date(date),
-          time,
-          isCancelled: true,
         },
       })
+
+      if (existingOverride) {
+        await prisma.dailyOverride.update({
+          where: {
+            id: existingOverride.id,
+          },
+          data: {
+            isCancelled: true,
+          },
+        })
+      } else {
+        await prisma.dailyOverride.create({
+          data: {
+            appointmentId,
+            date: new Date(date),
+            time,
+            isCancelled: true,
+          },
+        })
+      }
     }
   } else {
     await prisma.appointment.delete({
