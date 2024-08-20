@@ -1,5 +1,5 @@
+import { DaySessionsHeldCard } from './day-sessions-held'
 import { MonthCancellationsCard } from './month-cancellations-card'
-import { MonthReschedulingsCard } from './month-reschedulings-card'
 import { MonthSessionsHeldCard } from './month-sessions-held-card'
 import { MonthTotalSessionsCard } from './month-total-sessions-card'
 
@@ -13,9 +13,9 @@ export default function Dashboard() {
 
         <MonthSessionsHeldCard />
 
-        <MonthCancellationsCard />
+        <DaySessionsHeldCard />
 
-        <MonthReschedulingsCard />
+        <MonthCancellationsCard />
       </div>
 
       <div></div>
