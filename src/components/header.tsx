@@ -24,7 +24,7 @@ export function Header() {
           Dashboard
         </NavLink>
 
-        <NavLink href="/patients">
+        <NavLink href="/patients" disabled>
           <Users className="size-4" />
           Patients
         </NavLink>
