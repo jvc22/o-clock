@@ -3,7 +3,7 @@ import { CookiesFn } from 'cookies-next/lib/types'
 import ky from 'ky'
 
 export const api = ky.create({
-  prefixUrl: 'http://localhost:3000/api',
+  prefixUrl: 'https://oclockapp.vercel.app/api',
   hooks: {
     beforeRequest: [
       async (request) => {
