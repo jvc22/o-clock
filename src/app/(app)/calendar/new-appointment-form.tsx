@@ -29,9 +29,8 @@ import {
 } from '@/components/ui/select'
 import { useFormState } from '@/hooks/use-form-state'
 import { getPatientsList } from '@/http/get-patients-list'
-import { queryClient } from '@/lib/react-query'
+import { getQueryClient } from '@/lib/react-query'
 import { timeIntervals } from '@/static/time-intervals'
-import { getWeekDays } from '@/utils/get-week-days'
 
 import { scheduleNewAppointment } from './actions'
 
@@ -41,13 +40,13 @@ interface NewAppointmentFormProps {
 }
 
 export function NewAppointmentForm({ date, time }: NewAppointmentFormProps) {
-  const weekdays = getWeekDays(new Date(date))
+  const queryClient = getQueryClient()
 
   const [{ success, message, errors }, handleSubmit, isPending] = useFormState(
     scheduleNewAppointment,
     () => {
       queryClient.invalidateQueries({
-        queryKey: ['appointments', weekdays],
+        queryKey: ['appointments'],
       })
 
       ref.current?.click()

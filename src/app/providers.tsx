@@ -6,9 +6,11 @@ import { ReactNode } from 'react'
 import { ThemeProvider } from '@/components/theme/theme-provider'
 import { Toaster } from '@/components/ui/sonner'
 import { DateProvider } from '@/contexts/date'
-import { queryClient } from '@/lib/react-query'
+import { getQueryClient } from '@/lib/react-query'
 
 export function Providers({ children }: { children: ReactNode }) {
+  const queryClient = getQueryClient()
+
   return (
     <QueryClientProvider client={queryClient}>
       <DateProvider>

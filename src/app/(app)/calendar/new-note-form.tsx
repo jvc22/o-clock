@@ -16,7 +16,6 @@ import {
 } from '@/components/ui/dialog'
 import { Textarea } from '@/components/ui/textarea'
 import { useFormState } from '@/hooks/use-form-state'
-import { queryClient } from '@/lib/react-query'
 
 import { addNewNote } from './actions'
 
@@ -25,10 +24,6 @@ export function NewNoteForm() {
     addNewNote,
     () => {
       toast.success('Note added successfully!')
-
-      queryClient.invalidateQueries({
-        queryKey: ['notes'],
-      })
     },
     true,
   )
