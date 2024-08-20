@@ -28,47 +28,41 @@ export async function GET(request: Request) {
   const startOfLastMonth = startOfMonth(subMonths(today, 1))
   const endOfLastMonth = endOfMonth(subMonths(today, 1))
 
-  const [currentMonthCancellations, lastMonthCancellations] = await Promise.all(
+  const [currentMonthReschedulings, lastMonthReschedulings] = await Promise.all(
     [
-      prisma.dailyOverride.count({
+      prisma.appointment.count({
         where: {
-          appointment: {
-            userId: user.id,
-          },
+          isRecurring: false,
           date: {
             gte: startOfCurrentMonth,
             lte: endOfCurrentMonth,
           },
-          isCancelled: true,
         },
       }),
-      prisma.dailyOverride.count({
+      prisma.appointment.count({
         where: {
-          appointment: {
-            userId: user.id,
-          },
+          isRecurring: false,
           date: {
             gte: startOfLastMonth,
             lte: endOfLastMonth,
           },
-          isCancelled: true,
         },
       }),
     ],
   )
 
-  const difference = currentMonthCancellations - lastMonthCancellations
-  let percentageChange = lastMonthCancellations
-    ? (difference / lastMonthCancellations) * 100
-    : currentMonthCancellations > 0
+  const difference = currentMonthReschedulings - lastMonthReschedulings
+  let percentageChange = lastMonthReschedulings
+    ? (difference / lastMonthReschedulings) * 100
+    : currentMonthReschedulings > 0
       ? 100
       : 0
 
-  if (lastMonthCancellations === 0 && percentageChange > 100) {
+  if (lastMonthReschedulings === 0 && percentageChange > 100) {
     percentageChange = 100
   }
 
-  if (currentMonthCancellations === 0 && percentageChange < -100) {
+  if (currentMonthReschedulings === 0 && percentageChange < -100) {
     percentageChange = -100
   }
 
@@ -76,7 +70,7 @@ export async function GET(request: Request) {
 
   return NextResponse.json(
     {
-      amount: currentMonthCancellations,
+      amount: currentMonthReschedulings,
       diffFromLastMonth: formattedPercentage,
     },
     { status: 200 },
