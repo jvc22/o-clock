@@ -18,3 +18,7 @@ export async function auth() {
     redirect('/auth/sign-in')
   }
 }
+
+export function isAuthenticated() {
+  return !!cookies().get('oclock-token')?.value
+}
