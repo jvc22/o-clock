@@ -41,6 +41,7 @@ export async function GET(request: Request) {
 
   const appointments = await prisma.appointment.findMany({
     where: {
+      userId: user.id,
       OR: [
         { isRecurring: false, date: { in: parsedWeekdays } },
         {
