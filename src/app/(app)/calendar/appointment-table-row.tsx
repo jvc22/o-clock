@@ -113,7 +113,7 @@ export function AppointmentTableRow({
         queryKey: ['appointments'],
       })
 
-      toast.success('Appointment cancelled successfully!')
+      toast.success('Session cancelled successfully!')
     },
   })
 

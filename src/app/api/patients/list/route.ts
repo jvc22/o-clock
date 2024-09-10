@@ -20,6 +20,9 @@ export async function GET(request: Request) {
       name: true,
       guardianName: true,
     },
+    orderBy: {
+      name: 'asc',
+    },
   })
 
   return NextResponse.json({ patients }, { status: 200 })

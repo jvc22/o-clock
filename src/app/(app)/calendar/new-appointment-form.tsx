@@ -51,7 +51,7 @@ export function NewAppointmentForm({ date, time }: NewAppointmentFormProps) {
 
       ref.current?.click()
 
-      toast.success('Appointment scheduled successfully!')
+      toast.success('Session scheduled successfully!')
     },
     true,
   )
@@ -70,9 +70,9 @@ export function NewAppointmentForm({ date, time }: NewAppointmentFormProps) {
   return (
     <DialogContent className="max-w-md">
       <DialogHeader>
-        <DialogTitle>New appointment</DialogTitle>
+        <DialogTitle>New session</DialogTitle>
         <DialogDescription>
-          Schedule a new appointment on your calendar
+          Schedule a new session on your calendar
         </DialogDescription>
       </DialogHeader>
 
@@ -110,6 +110,7 @@ export function NewAppointmentForm({ date, time }: NewAppointmentFormProps) {
                 data.patients.map((patient) => (
                   <SelectItem key={patient.id} value={patient.id}>
                     <span>{patient.name}</span>
+
                     <span className="ml-2 text-xs text-muted-foreground">
                       {patient.guardianName}
                     </span>
