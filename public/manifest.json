@@ -5,7 +5,7 @@
     "background_color": "#020817",
     "display": "standalone",
     "orientation": "portrait",
-    "start_url": "https://oclock.vercel.app/",
+    "start_url": "https://oclockapp.vercel.app/",
     "scope": "/",
     "icons": [
         {
