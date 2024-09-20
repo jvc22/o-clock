@@ -1,0 +1,42 @@
+{
+    "name": "o.clock",
+    "short_name": "o.clock",
+    "theme_color": "#020817",
+    "background_color": "#020817",
+    "display": "standalone",
+    "orientation": "portrait",
+    "start_url": "https://oclock.vercel.app/",
+    "scope": "/",
+    "icons": [
+        {
+            "src": "/icon-512x512.png",
+            "type": "image/png",
+            "sizes": "512x512"
+        },
+        {
+            "src": "/src/app/favicon.ico",
+            "type": "image/ico",
+            "sizes": "256x256"
+        },
+        {
+           "src": "/icon-192x192.png",
+           "type": "image/png",
+           "sizes": "192x192"
+        },
+        {
+            "src": "/icon-96x96.png",
+            "type": "image/png",
+            "sizes": "96x96"
+         },
+        {
+           "src": "/icon-32x32.png",
+           "type": "image/png",
+           "sizes": "32x32"
+        },
+        {
+           "src": "/icon-16x16.png",
+           "type": "image/png",
+           "sizes": "16x16"
+        }
+     ]
+ }
