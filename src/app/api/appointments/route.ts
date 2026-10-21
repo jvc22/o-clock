@@ -189,6 +189,7 @@ export async function POST(request: Request) {
   if (isRecurring) {
     const conflictingRecurringAppointment = await prisma.appointment.findFirst({
       where: {
+        userId: user.id,
         isRecurring: true,
         weekday,
         time,
