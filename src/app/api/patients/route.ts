@@ -5,6 +5,43 @@ import { prisma } from '@/lib/prisma'
 
 import { authMiddleware } from '../middleware'
 
+export async function GET(request: Request) {
+  const { user } = await authMiddleware(request)
+
+  if (!user) {
+    return NextResponse.json({ message: 'User not found.' }, { status: 401 })
+  }
+
+  const patients = await prisma.patient.findMany({
+    where: {
+      userId: user.id,
+    },
+    select: {
+      id: true,
+      name: true,
+      phone: true,
+      guardianName: true,
+      guardianPhone: true,
+      createdAt: true,
+      _count: {
+        select: {
+          appointments: true,
+        },
+      },
+    },
+    orderBy: {
+      name: 'asc',
+    },
+  })
+
+  const result = patients.map(({ _count, ...patient }) => ({
+    ...patient,
+    appointmentsCount: _count.appointments,
+  }))
+
+  return NextResponse.json({ patients: result }, { status: 200 })
+}
+
 export async function POST(request: Request) {
   const { user } = await authMiddleware(request)
 
